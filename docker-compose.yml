@@ -1,0 +1,22 @@
+version: '3.1'
+
+services:
+  app:
+    build:
+      context: .
+      args:
+        - IS_DEV=true
+    environment:
+      VIRTUAL_HOST: cloudchat.io
+      VIRTUAL_PROTO: HTTPS
+    expose:
+      - 80
+      - 443
+
+    volumes:
+      - .:/var/www
+      - ./000-default.conf:/etc/apache2/sites-available/000-default.conf:ro
+networks:
+  default:
+    external:
+      name: nginx-proxy
